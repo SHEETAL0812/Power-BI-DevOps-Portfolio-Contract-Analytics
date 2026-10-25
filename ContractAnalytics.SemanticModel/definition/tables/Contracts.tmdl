@@ -26,6 +26,18 @@ table Contracts
 		displayFolder: Risk
 		lineageTag: fd4cbe0b-04b6-4840-ad2a-703436d867b7
 
+	measure 'Avg Contract Value (EUR)' = AVERAGE(Contracts[ContractValueEUR])
+		formatString: #,0
+		displayFolder: Value
+
+	measure 'Expired Contracts' = CALCULATE(COUNTROWS(Contracts), Contracts[Status] = "Expired")
+		formatString: #,0
+		displayFolder: Volume
+
+	measure 'Active Share %' = DIVIDE([Active Contracts], [Total Contracts])
+		formatString: 0.0%
+		displayFolder: Volume
+
 	column ContractID
 		dataType: string
 		lineageTag: f95a7136-638b-4805-b265-3b792a879901
