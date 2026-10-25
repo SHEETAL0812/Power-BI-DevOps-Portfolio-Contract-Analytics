@@ -1,0 +1,12 @@
+relationship AutoDetected_c01dba9a-d3ce-48a3-8e31-ac07d01953f4
+	fromColumn: Contracts.CounterpartyID
+	toColumn: Counterparties.CounterpartyID
+
+relationship AutoDetected_1d4746e9-4153-4f4e-8762-b6961b70534d
+	fromColumn: Contracts.DepartmentID
+	toColumn: Departments.DepartmentID
+
+relationship 5e1b1e07-db9f-434f-af24-177526d15567
+	fromColumn: Contracts.StartDate
+	toColumn: Date.Date
+

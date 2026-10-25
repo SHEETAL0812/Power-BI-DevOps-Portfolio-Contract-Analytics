@@ -1,0 +1,144 @@
+table Contracts
+	lineageTag: 0b8d5772-2406-489c-85a9-2fa33ec72c9a
+
+	measure 'Total Contracts' = COUNTROWS(Contracts)
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 03984044-2f39-4a12-a789-125b806c9747
+
+	measure 'Active Contracts' = CALCULATE(COUNTROWS(Contracts), Contracts[Status] = "Active")
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 71e1b8e5-7199-4652-aca0-9a539bf08826
+
+	measure 'Total Value (EUR)' = SUM(Contracts[ContractValueEUR])
+		formatString: #,0
+		displayFolder: Value
+		lineageTag: 450a356c-fc67-433e-9edf-2bd59ae78757
+
+	measure 'Avg Review Cycle (Days)' = AVERAGE(Contracts[ReviewCycleDays])
+		formatString: 0.0
+		displayFolder: Process
+		lineageTag: 1c8d891b-b68a-4eb2-b08c-2ed861594c0f
+
+	measure 'Expiring Next 90 Days' = CALCULATE(COUNTROWS(Contracts), Contracts[Status] = "Active", Contracts[EndDate] >= TODAY(), Contracts[EndDate] <= TODAY() + 90)
+		formatString: #,0
+		displayFolder: Risk
+		lineageTag: fd4cbe0b-04b6-4840-ad2a-703436d867b7
+
+	column ContractID
+		dataType: string
+		lineageTag: f95a7136-638b-4805-b265-3b792a879901
+		summarizeBy: none
+		sourceColumn: ContractID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CounterpartyID
+		dataType: int64
+		formatString: 0
+		lineageTag: 36a4b77a-d2cf-4ebe-a7cf-11b4b36a00ef
+		summarizeBy: none
+		sourceColumn: CounterpartyID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: ae262bb7-383d-485d-88dc-fe23f3dacfdf
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContractType
+		dataType: string
+		lineageTag: fc62dd43-ca87-42c5-a9bd-cd66153bc167
+		summarizeBy: none
+		sourceColumn: ContractType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 33739796-4b2d-4cbd-ae95-1b699e916868
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 173a2b8e-e98f-4c78-a315-72e8c95d21b1
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SignedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0c6113d5-c7ae-409c-a0ba-7a4dadae6e36
+		summarizeBy: none
+		sourceColumn: SignedDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column StartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 62130a7e-5fe7-4907-a97d-8f248bbd4b0b
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EndDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 59a2d3c7-19a7-4798-bc05-5c56a15904fe
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ContractValueEUR
+		dataType: int64
+		formatString: 0
+		lineageTag: afdfc22e-d082-4b15-af62-22d95a5e1004
+		summarizeBy: sum
+		sourceColumn: ContractValueEUR
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReviewCycleDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 45f2492c-cbe0-4389-a0d3-86e160005f28
+		summarizeBy: sum
+		sourceColumn: ReviewCycleDays
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Contracts = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Sheetal\Dropbox\PC\Desktop\Advanced PowerBi Portfolio\Power-BI-DevOps-Portfolio-Contract-Analytics\data\Contracts.csv"), [Delimiter = ",", Columns = 11, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"ContractID", type text}, {"CounterpartyID", Int64.Type}, {"DepartmentID", Int64.Type}, {"ContractType", type text}, {"Status", type text}, {"CreatedDate", type date}, {"SignedDate", type date}, {"StartDate", type date}, {"EndDate", type date}, {"ContractValueEUR", Int64.Type}, {"ReviewCycleDays", Int64.Type}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

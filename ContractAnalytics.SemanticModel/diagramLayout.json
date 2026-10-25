@@ -1,0 +1,74 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 468,
+            "y": 173
+          },
+          "nodeIndex": "Contracts",
+          "nodeLineageTag": "0b8d5772-2406-489c-85a9-2fa33ec72c9a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 164,
+            "y": 8
+          },
+          "nodeIndex": "Counterparties",
+          "nodeLineageTag": "27839349-3fec-42f1-852f-e4a42a143b21",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 747,
+            "y": 71
+          },
+          "nodeIndex": "Departments",
+          "nodeLineageTag": "8cf5776e-33f5-4c4c-9707-28bbf782cdf4",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 162,
+            "y": 284
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "26daade7-71c1-48ae-80bf-1379cd0d20c9",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

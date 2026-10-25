@@ -1,0 +1,32 @@
+table Departments
+	lineageTag: 8cf5776e-33f5-4c4c-9707-28bbf782cdf4
+
+	column DepartmentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 3fa5ad89-e3db-475a-8bd5-df962da72615
+		summarizeBy: none
+		sourceColumn: DepartmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: ab7c4765-e197-43cd-9c44-172ab97d6df7
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Departments = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Sheetal\Dropbox\PC\Desktop\Advanced PowerBi Portfolio\Power-BI-DevOps-Portfolio-Contract-Analytics\data\Departments.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"DepartmentID", Int64.Type}, {"Department", type text}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

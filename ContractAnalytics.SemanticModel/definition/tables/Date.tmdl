@@ -1,0 +1,31 @@
+table Date
+	lineageTag: 26daade7-71c1-48ae-80bf-1379cd0d20c9
+
+	column Date
+		formatString: General Date
+		lineageTag: 006371f8-da8a-4dfc-a65f-4b67d1fd7cb3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year = YEAR('Date'[Date])
+		formatString: 0
+		lineageTag: b5a73ccd-8af2-44bb-abdc-36d919553da4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month = FORMAT('Date'[Date], "MMM")
+		lineageTag: 4feff76b-97be-4c88-b79a-0176c0046b3c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = calculated
+		mode: import
+		source = CALENDAR(DATE(2023,1,1), DATE(2030,12,31))
+
+	annotation PBI_Id = ffc964265f91409bb897e01e299da815
+

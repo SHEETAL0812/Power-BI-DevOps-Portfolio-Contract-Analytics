@@ -1,0 +1,40 @@
+table Counterparties
+	lineageTag: 27839349-3fec-42f1-852f-e4a42a143b21
+
+	column CounterpartyID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7975f4a7-b1f0-4caa-8873-998fd95de2b0
+		summarizeBy: none
+		sourceColumn: CounterpartyID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Counterparty
+		dataType: string
+		lineageTag: 36201e74-381d-47ef-a832-742a1ba1c44f
+		summarizeBy: none
+		sourceColumn: Counterparty
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 6bfdbcd7-d7ee-42e2-a7c7-da4ba4875bbc
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Counterparties = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Sheetal\Dropbox\PC\Desktop\Advanced PowerBi Portfolio\Power-BI-DevOps-Portfolio-Contract-Analytics\data\Counterparties.csv"), [Delimiter = ",", Columns = 3, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"CounterpartyID", Int64.Type}, {"Counterparty", type text}, {"Country", type text}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

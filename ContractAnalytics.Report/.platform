@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ContractAnalytics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "69f162e0-f0ee-4bbd-bdd4-c5f8de0db50c"
+  }
+}
