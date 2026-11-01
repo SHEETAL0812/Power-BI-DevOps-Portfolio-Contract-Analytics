@@ -41,6 +41,16 @@ table Contracts
 		displayFolder: Volume
 		lineageTag: 845ab2fd-8edd-4d6a-94e6-273a1d947b5a
 
+	measure 'Expiring Next 30 Days' = CALCULATE(COUNTROWS(Contracts), Contracts[Status] = "Active", Contracts[EndDate] >= TODAY(), Contracts[EndDate] <= TODAY() + 30)
+		formatString: #,0
+		displayFolder: Risk
+		lineageTag: 2f9f6744-0f65-4cb0-a34b-183f4d0f8e71
+
+	measure 'Expired Last 90 Days' = CALCULATE(COUNTROWS(Contracts), Contracts[Status] = "Expired", Contracts[EndDate] >= TODAY() - 90, Contracts[EndDate] <= TODAY())
+		formatString: #,0
+		displayFolder: Risk
+		lineageTag: 9d3a6e2b-6e9a-4f3d-b8c1-5a7d2f0e4b96
+
 	column ContractID
 		dataType: string
 		lineageTag: f95a7136-638b-4805-b265-3b792a879901
