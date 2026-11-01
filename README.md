@@ -10,6 +10,17 @@ A Power BI project built as a developer-style repo: `.pbip` + TMDL, version-cont
 - `Departments` (dim): 8 departments
 - `Date` (dim): calculated date table (2023-2030)
 
+## Tools used
+| Tool | How I use it |
+|---|---|
+| Power BI Desktop (free) | Building the data model and report; saving as a Power BI Project (`.pbip`) |
+| VS Code | Editing TMDL measure files as text and the README |
+| GitHub Copilot (in VS Code) | Prompt engineering: describing measures in plain English so Copilot writes the TMDL, which I then verify |
+| GitHub Desktop | Branches, commits, diffs, publishing, reverting and cherry-picking |
+| GitHub | Hosting the repo, pull requests and commit history |
+
+Coming next: Tabular Editor 2, DAX Studio, ALM Toolkit and GitHub Actions.
+
 ## Measures (written in TMDL)
 | Measure | Folder | Purpose |
 |---|---|---|
@@ -26,8 +37,8 @@ A Power BI project built as a developer-style repo: `.pbip` + TMDL, version-cont
 | Week | Topic | Status |
 |---|---|---|
 | 1 | .pbip format + TMDL | done |
-| 2 | Git and GitHub | next |
-| 3 | Tabular Editor 2 + DAX Studio | |
+| 2 | Git and GitHub | done |
+| 3 | Tabular Editor 2 + DAX Studio | next |
 | 4 | Calculation Groups | |
 | 5 | ALM Toolkit | |
 | 6-7 | GitHub Actions CI | |
@@ -47,3 +58,26 @@ I reviewed the exact lines changed in the Git diff before committing.
 - Saving as `.pbip` splits the report into plain text files: the report pages and visuals are JSON, and the data model (tables, measures, relationships) is TMDL.
 - TMDL is strict about structure. An object's own properties (like `lineageTag`) must come before its child objects (measures, columns), and indentation must use tabs consistently. I hit this error when opening the project and fixed it by moving the property line.
 - AI can write TMDL from plain English, but I verify it every time: the project must open without errors, the numbers must be checked by hand, and the Git diff shows exactly what changed.
+
+## Week 2: Git workflow with branches and pull requests
+
+All changes now go through a branch and a pull request, never directly to `main`.
+
+| PR | What it did |
+|---|---|
+| [#1 Stop tracking Power BI local files](https://github.com/SHEETAL0812/Power-BI-DevOps-Portfolio-Contract-Analytics/pull/1) | Fixed `.gitignore` and removed machine-specific files (`localSettings.json`, `cache.abf`) from tracking |
+| [#2 Add expiry-window measures](https://github.com/SHEETAL0812/Power-BI-DevOps-Portfolio-Contract-Analytics/pull/2) | Added Expiring Next 30 Days and Expired Last 90 Days, drafted with Copilot and verified in Power BI Desktop |
+| [#3 Use Active Contracts measure in the report card](https://github.com/SHEETAL0812/Power-BI-DevOps-Portfolio-Contract-Analytics/pull/3) | Fixed a card that counted ContractIDs instead of using the measure |
+
+### Practised
+- **Discard vs revert:** discarded uncommitted changes, and reverted a committed mistake while keeping later work
+- **Cherry-pick:** moved one useful commit from a practice branch to a clean branch
+- **Reading history:** used commits and diffs to see exactly what changed and why
+
+### What I learned
+- **Git only ignores files that aren't tracked yet.** My `.gitignore` had stray leading spaces, so its rules didn't work and Power BI's machine-specific files (`localSettings.json`, `cache.abf`) were committed. I fixed the file and used `git rm --cached` to stop tracking them, through a pull request (#1).
+- **Every change goes through a branch and a pull request.** I created feature branches, committed, published, reviewed my own diff on the Files changed tab, merged, and then pulled `main` and deleted the branch.
+- **AI-written TMDL needs checking.** I used Copilot to draft measures (#2), then confirmed the project opened in Power BI Desktop, checked that the numbers made sense (the 30-day count can't be larger than the 90-day count), and read the Git diff before committing. Desktop also added `lineageTag` IDs to the new measures when I saved.
+- **A mistake can be silent.** When I changed the Active Contracts filter, the report card still showed 380, because the card was counting ContractIDs instead of using the measure. I fixed the card to use the measure (#3), which showed me why testing a number and reading the diff both matter.
+- **Discard vs revert.** Discard removes changes that haven't been committed yet. Revert adds a new commit that undoes an earlier one, keeps the history intact, and leaves later work in place.
+- **Cherry-pick saved my useful work.** I moved just the card fix from my practice branch to a clean branch, so the practice mistakes never reached `main`.
